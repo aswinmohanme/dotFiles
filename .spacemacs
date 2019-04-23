@@ -65,6 +65,7 @@ This function should only modify configuration layer settings."
                graphviz-dot-revert-delay 1)
      (shell :variables
             shell-default-shell 'ansi-term
+            shell-default-term-shell "/bin/bash"
             shell-default-height 30
             shell-default-position 'bottom)
      (wakatime :variables
@@ -489,7 +490,6 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq neo-theme 'ascii)
-  (setq multi-term-program "/bin/fish")
 
   ;; Spacemacs Line Wrap
   (defun org-line-wrap ()
