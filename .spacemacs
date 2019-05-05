@@ -39,46 +39,42 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
      git
+     helm
      multiple-cursors
      neotree
 
-     html
-     yaml
+     asm
+     c-c++
      elixir
-     python
-     emacs-lisp
-     racket
+     emacs-lisp html
+     kotlin
      major-modes
      markdown
+     python
+     racket
+     react
      ruby
-     c-c++
-     kotlin
+     yaml
 
-     (javascript :variables
-           javascript-disable-tern-port-files nil)
-     (dart :variables
-           dart-format-on-save t
-           dart-sdk-path "/home/aswinmohanme/Flutter/flutter/bin/cache/dart-sdk/")
-     (graphviz :variables
-               graphviz-dot-revert-delay 1)
-     (shell :variables
-            shell-default-shell 'ansi-term
-            shell-default-term-shell "/bin/bash"
-            shell-default-height 30
-            shell-default-position 'bottom)
-     (wakatime :variables
-               wakatime-api-key "94fdd21d-bcaf-466e-88c9-678f45911037")
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
                       auto-completion-complete-with-key-sequence (kbd "jk")
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
-     (spell-checking :variables
-                     spell-checking-enable-by-default nil
-                     enable-flyspell-auto-completion t)
+
+     (dart :variables
+           dart-format-on-save t
+           dart-sdk-path "/home/aswinmohanme/Flutter/flutter/bin/cache/dart-sdk/")
+
+     (graphviz :variables
+               graphviz-dot-revert-delay 1)
+
+     (javascript :variables
+                 js2-strict-missing-semi-warning nil
+                 javascript-disable-tern-port-files nil)
+
      (org :variables
           org-enable-org-journal-support t
           org-journal-dir "~/Brain/journal/"
@@ -87,6 +83,19 @@ This function should only modify configuration layer settings."
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
           org-journal-time-format "")
+
+     (shell :variables
+            shell-default-shell 'ansi-term
+            shell-default-term-shell "/usr/bin/fish"
+            shell-default-height 30
+            shell-default-position 'bottom)
+
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil
+                     enable-flyspell-auto-completion t)
+
+     (wakatime :variables
+               wakatime-api-key "94fdd21d-bcaf-466e-88c9-678f45911037")
      )
 
    ;; List of additional packages that will be installed without being
@@ -489,14 +498,24 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;Set the projectile ascii theme
   (setq neo-theme 'ascii)
 
-  ;; Spacemacs Line Wrap
+  ; Spacemacs Line Wrap
+  (add-hook 'text-mode-hook 'org-line-wrap)
   (defun org-line-wrap ()
     (spacemacs/toggle-visual-line-navigation-on)
     (setq-local word-wrap nil))
 
-  (add-hook 'text-mode-hook 'org-line-wrap)
+  ; Term Movement
+  (setq term-char-mode-point-at-process-mark nil)
+
+  ; Fish shell ugly characters  fix
+  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+  (ansi-color-for-comint-mode-on)
+
+  ; Do not lock files while editing
+  (setq create-lockfiles nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
