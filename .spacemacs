@@ -45,15 +45,14 @@ This function should only modify configuration layer settings."
      neotree
 
      asm
-     c-c++
      elixir
-     emacs-lisp html
+     emacs-lisp
+     html
      kotlin
      major-modes
      markdown
      python
      racket
-     react
      ruby
      yaml
 
