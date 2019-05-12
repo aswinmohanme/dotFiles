@@ -75,8 +75,10 @@ This function should only modify configuration layer settings."
                  javascript-disable-tern-port-files nil)
 
      (org :variables
+          org-want-todo-bindings t
+          org-projectile-file "~/Dropbox/org/todos.org"
           org-enable-org-journal-support t
-          org-journal-dir "~/Brain/journal/"
+          org-journal-dir "~/Dropbox/org/journal/"
           org-journal-file-format "%Y-%m-%d"
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
@@ -497,24 +499,31 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  ;Set the projectile ascii theme
+  ;; Set the projectile ascii theme
   (setq neo-theme 'ascii)
 
-  ; Spacemacs Line Wrap
-  (add-hook 'text-mode-hook 'org-line-wrap)
-  (defun org-line-wrap ()
+  ;; Spacemacs Line Wrap
+  (add-hook 'text-mode-hook 'custom-line-wrap)
+  (defun custom-line-wrap ()
     (spacemacs/toggle-visual-line-navigation-on)
     (setq-local word-wrap nil))
 
-  ; Term Movement
+  ;; Term Movement
   (setq term-char-mode-point-at-process-mark nil)
 
-  ; Fish shell ugly characters  fix
+  ;; Fish shell ugly characters  fix
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
   (ansi-color-for-comint-mode-on)
 
-  ; Do not lock files while editing
+  ;; Do not lock files while editing
   (setq create-lockfiles nil)
+
+  ;; Org Mode Configutation
+  (with-eval-after-load 'org
+    (setq org-agenda-window-setup 'only-window)
+    (setq org-todo-keywords '((sequence "TODO" "DOING" "|" "DONE" "CANCELLED")))
+    (setq org-todo-keyword-faces '(("DOING" . "yellow")))
+    (setq org-agenda-files (quote("~/Dropbox/org" "~/Dropbox/org/projects" "~/Dropbox/org/learning"))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
