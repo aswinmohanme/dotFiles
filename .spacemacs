@@ -520,7 +520,8 @@ before packages are loaded."
 
   ;; Org Mode Configutation
   (with-eval-after-load 'org
-    (setq org-agenda-window-setup 'only-window)
+    (setq org-clock-out-when-done t)
+    (setq org-agenda-window-setup 'only-window) ; FullScreen Window
     (setq org-todo-keywords '((sequence "TODO" "DOING" "|" "DONE" "CANCELLED")))
     (setq org-todo-keyword-faces '(("DOING" . "yellow")))
     (setq org-agenda-files (quote("~/Dropbox/org" "~/Dropbox/org/projects" "~/Dropbox/org/learning"))))
