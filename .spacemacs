@@ -520,10 +520,13 @@ before packages are loaded."
 
   ;; Org Mode Configutation
   (with-eval-after-load 'org
+    (add-hook 'org-mode-hook (lambda ()
+                               (defadvice org-clock-in (after org-clock-in-after activate)(save-buffer))
+                               (defadvice org-clock-out (after org-clock-out-after activate)(save-buffer))))
     (setq org-clock-out-when-done t)
     (setq org-agenda-window-setup 'only-window) ; FullScreen Window
-    (setq org-todo-keywords '((sequence "TODO" "DOING" "|" "DONE" "CANCELLED")))
-    (setq org-todo-keyword-faces '(("DOING" . "yellow")))
+    (setq org-todo-keywords '((sequence "TODO" "BLOCKED" "|" "DONE" "CANCELLED")))
+    (setq org-todo-keyword-faces '(("BLOCKED" . "yellow")))
     (setq org-agenda-files (quote("~/Dropbox/org" "~/Dropbox/org/projects" "~/Dropbox/org/learning"))))
   )
 
